@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:register_users/view/restricted.dart';
+
+import 'chat.dart';
 
 import '../model/rounded_button.dart';
 
@@ -25,7 +26,6 @@ class _RegisterState extends State<Register> {
   void initState() {
     super.initState();
     Firebase.initializeApp().whenComplete(() {
-      print("completed");
       setState(() {});
     });
     getUser();
@@ -38,7 +38,7 @@ class _RegisterState extends State<Register> {
         loggedInUser = user;
       }
     } catch (e) {
-      print(e);
+      throw e.toString();
     }
   }
 
@@ -114,7 +114,7 @@ class _RegisterState extends State<Register> {
                     password: password!,
                   );
                   if (newUser != null) {
-                    Navigator.pushNamed(context, Restricted.id);
+                    Navigator.pushNamed(context, Chat.id);
                   }
 
                   setState(() {});

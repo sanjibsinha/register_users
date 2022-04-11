@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'restricted.dart';
+import 'chat.dart';
+
 import '../model/rounded_button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -21,7 +22,6 @@ class _LoginState extends State<Login> {
   void initState() {
     super.initState();
     Firebase.initializeApp().whenComplete(() {
-      print("completed");
       setState(() {});
     });
   }
@@ -88,7 +88,7 @@ class _LoginState extends State<Login> {
                   final user = await _auth.signInWithEmailAndPassword(
                       email: email!, password: password!);
                   if (user != null) {
-                    Navigator.pushNamed(context, Restricted.id);
+                    Navigator.pushNamed(context, Chat.id);
                   }
 
                   setState(() {});

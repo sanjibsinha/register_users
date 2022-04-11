@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:register_users/view/restricted.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'view/chat.dart';
 import 'view/login.dart';
 import 'view/register.dart';
 import 'view/welcome.dart';
@@ -29,7 +29,7 @@ class FirebaseLoginRegister extends StatelessWidget {
         Welcome.id: (context) => const Welcome(),
         Login.id: (context) => const Login(),
         Register.id: (context) => const Register(),
-        Restricted.id: (context) => const Restricted(),
+        Chat.id: (context) => const Chat(),
       },
     );
   }

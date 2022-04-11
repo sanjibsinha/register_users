@@ -1,9 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:register_users/view/restricted.dart';
+import 'package:firebase_core/firebase_core.dart';
 import '../model/rounded_button.dart';
-import 'login.dart';
 import 'register.dart';
+
+import 'login.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -18,7 +18,6 @@ class _WelcomeState extends State<Welcome> {
   void initState() {
     super.initState();
     Firebase.initializeApp().whenComplete(() {
-      print("completed");
       setState(() {});
     });
   }
@@ -74,13 +73,6 @@ class _WelcomeState extends State<Welcome> {
               colour: Colors.blueAccent,
               onPressed: () {
                 Navigator.pushNamed(context, Register.id);
-              },
-            ),
-            RoundedButton(
-              title: 'Member\'s Page',
-              colour: Colors.blueAccent,
-              onPressed: () {
-                Navigator.pushNamed(context, Restricted.id);
               },
             ),
           ],
