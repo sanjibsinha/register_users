@@ -78,8 +78,9 @@ class _RegisterState extends State<Register> {
                 email = value;
               },
               style: const TextStyle(
-                fontSize: 25.0,
+                fontSize: 35.0,
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
             const SizedBox(
@@ -96,8 +97,9 @@ class _RegisterState extends State<Register> {
                 password = value;
               },
               style: const TextStyle(
-                fontSize: 25.0,
+                fontSize: 35.0,
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
             const SizedBox(
@@ -105,21 +107,21 @@ class _RegisterState extends State<Register> {
             ),
             RoundedButton(
               title: 'Register',
-              colour: Colors.blueAccent,
+              colour: Colors.black45,
               onPressed: () async {
                 setState(() {});
                 try {
-                  final newUser = await _auth.createUserWithEmailAndPassword(
+                  final user = await _auth.createUserWithEmailAndPassword(
                     email: email!,
                     password: password!,
                   );
-                  if (newUser != null) {
+                  if (user != null) {
                     Navigator.pushNamed(context, Chat.id);
                   }
 
                   setState(() {});
                 } catch (e) {
-                  print(e);
+                  throw e.toString();
                 }
               },
             ),

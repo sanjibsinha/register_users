@@ -48,7 +48,7 @@ class _WelcomeState extends State<Welcome> {
                 ),
                 const Expanded(
                   child: Text(
-                    'Register and Login',
+                    'Chatting Friends: Register or Login',
                     style: TextStyle(
                       fontSize: 45.0,
                       color: Colors.black,
@@ -63,14 +63,14 @@ class _WelcomeState extends State<Welcome> {
             ),
             RoundedButton(
               title: 'Log In',
-              colour: Colors.lightBlueAccent,
+              colour: Colors.black45,
               onPressed: () {
                 Navigator.pushNamed(context, Login.id);
               },
             ),
             RoundedButton(
               title: 'Register',
-              colour: Colors.blueAccent,
+              colour: Colors.black45,
               onPressed: () {
                 Navigator.pushNamed(context, Register.id);
               },
