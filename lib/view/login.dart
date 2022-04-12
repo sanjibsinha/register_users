@@ -1,9 +1,9 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'chat.dart';
 
 import '../model/rounded_button.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -61,6 +61,11 @@ class _LoginState extends State<Login> {
               onChanged: (value) {
                 email = value;
               },
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(
               height: 8.0,
@@ -75,25 +80,35 @@ class _LoginState extends State<Login> {
               onChanged: (value) {
                 password = value;
               },
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(
               height: 24.0,
             ),
             RoundedButton(
               title: 'Log In',
-              colour: Colors.lightBlueAccent,
+              colour: Colors.black45,
               onPressed: () async {
                 setState(() {});
                 try {
                   final user = await _auth.signInWithEmailAndPassword(
-                      email: email!, password: password!);
+                    email: email!,
+                    password: password!,
+                  );
                   if (user != null) {
-                    Navigator.pushNamed(context, Chat.id);
+                    Navigator.pushNamed(
+                      context,
+                      Chat.id,
+                    );
                   }
 
                   setState(() {});
                 } catch (e) {
-                  print(e);
+                  throw e.toString();
                 }
               },
             ),

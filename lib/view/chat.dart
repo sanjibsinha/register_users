@@ -1,7 +1,7 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User? loggedInUser;
@@ -54,15 +54,22 @@ class _ChatState extends State<Chat> {
                 Navigator.pop(context);
               }),
         ],
-        title: const Text('Chat'),
-        backgroundColor: Colors.lightBlueAccent,
+        title: const Text(
+          'Chat',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.red,
       ),
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const MessagesStream(),
+            const MessagingStream(),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -81,7 +88,11 @@ class _ChatState extends State<Chat> {
                       },
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Enter Text',
+                        hintText: 'Write your message.',
+                      ),
+                      style: const TextStyle(
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -96,7 +107,7 @@ class _ChatState extends State<Chat> {
                     child: const Text(
                       'Send',
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 30.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -111,8 +122,8 @@ class _ChatState extends State<Chat> {
   }
 }
 
-class MessagesStream extends StatelessWidget {
-  const MessagesStream({Key? key}) : super(key: key);
+class MessagingStream extends StatelessWidget {
+  const MessagingStream({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -127,27 +138,27 @@ class MessagesStream extends StatelessWidget {
           );
         }
         final messages = snapshot.data!.docChanges.reversed;
-        List<MessageBubble> messageBubbles = [];
+        List<MessageContainer> messageContainers = [];
         for (var message in messages) {
           final messageText = message.doc['text'];
           final messageSender = message.doc['sender'];
 
           final currentUser = loggedInUser!.email;
 
-          final messageBubble = MessageBubble(
+          final messageContainer = MessageContainer(
             sender: messageSender,
             text: messageText,
             isMe: currentUser == messageSender,
           );
 
-          messageBubbles.add(messageBubble);
+          messageContainers.add(messageContainer);
         }
         return Expanded(
           child: ListView(
             reverse: true,
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: messageBubbles,
+            children: messageContainers,
           ),
         );
       },
@@ -155,9 +166,13 @@ class MessagesStream extends StatelessWidget {
   }
 }
 
-class MessageBubble extends StatelessWidget {
-  const MessageBubble(
-      {required this.sender, required this.text, required this.isMe});
+class MessageContainer extends StatelessWidget {
+  const MessageContainer({
+    Key? key,
+    required this.sender,
+    required this.text,
+    required this.isMe,
+  }) : super(key: key);
 
   final String sender;
   final String text;
@@ -174,8 +189,9 @@ class MessageBubble extends StatelessWidget {
           Text(
             sender,
             style: const TextStyle(
-              fontSize: 12.0,
+              fontSize: 25.0,
               color: Colors.black54,
+              fontWeight: FontWeight.bold,
             ),
           ),
           Material(
@@ -190,7 +206,7 @@ class MessageBubble extends StatelessWidget {
                     topRight: Radius.circular(30.0),
                   ),
             elevation: 5.0,
-            color: isMe ? Colors.lightBlueAccent : Colors.white,
+            color: isMe ? Colors.black54 : Colors.white,
             child: Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
@@ -198,7 +214,8 @@ class MessageBubble extends StatelessWidget {
                 text,
                 style: TextStyle(
                   color: isMe ? Colors.white : Colors.black54,
-                  fontSize: 15.0,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
