@@ -69,7 +69,7 @@ class _ChatState extends State<Chat> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const MessagingStream(),
+            const MessageStreamBuilder(),
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
@@ -122,8 +122,8 @@ class _ChatState extends State<Chat> {
   }
 }
 
-class MessagingStream extends StatelessWidget {
-  const MessagingStream({Key? key}) : super(key: key);
+class MessageStreamBuilder extends StatelessWidget {
+  const MessageStreamBuilder({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -138,27 +138,27 @@ class MessagingStream extends StatelessWidget {
           );
         }
         final messages = snapshot.data!.docChanges.reversed;
-        List<MessageContainer> messageContainers = [];
+        List<DisplayMessages> displayMessages = [];
         for (var message in messages) {
           final messageText = message.doc['text'];
           final messageSender = message.doc['sender'];
 
           final currentUser = loggedInUser!.email;
 
-          final messageContainer = MessageContainer(
+          final displayMessage = DisplayMessages(
             sender: messageSender,
             text: messageText,
             isMe: currentUser == messageSender,
           );
 
-          messageContainers.add(messageContainer);
+          displayMessages.add(displayMessage);
         }
         return Expanded(
           child: ListView(
             reverse: true,
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-            children: messageContainers,
+            children: displayMessages,
           ),
         );
       },
@@ -166,8 +166,8 @@ class MessagingStream extends StatelessWidget {
   }
 }
 
-class MessageContainer extends StatelessWidget {
-  const MessageContainer({
+class DisplayMessages extends StatelessWidget {
+  const DisplayMessages({
     Key? key,
     required this.sender,
     required this.text,
